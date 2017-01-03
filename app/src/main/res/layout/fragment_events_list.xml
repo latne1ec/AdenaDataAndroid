@@ -1,0 +1,44 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.EventsListFragment"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    >
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/events_list_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:visibility="gone"
+        android:background="#fff"
+        />
+
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/events_list_ProgressWheel"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        wheel:matProg_barColor="@color/accent"
+        wheel:matProg_progressIndeterminate="true"
+        />
+
+
+    <TextView
+        android:id="@+id/events_list_empty_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:textSize="16sp"
+        android:text="There are no events."
+        android:visibility="gone"
+        />
+
+
+</FrameLayout>

@@ -1,0 +1,36 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.adenadata.android.activity.TourActivity$PlaceholderFragment"
+    android:orientation="vertical"
+    android:background="#fff"
+    >
+
+    <ImageView
+        android:id="@+id/tour_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/primaryDark"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/tour_textView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Ho ho ho\nhehehe"
+        android:textSize="22sp"
+        android:textColor="@color/black_87"
+        android:gravity="center"
+        android:paddingBottom="40dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:background="#fff"
+        android:lineSpacingMultiplier="1.4"
+        />
+
+</LinearLayout>

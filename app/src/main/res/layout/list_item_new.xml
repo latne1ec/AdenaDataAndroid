@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_item_new_layout"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="?android:attr/selectableItemBackground"
+    >
+
+    <RelativeLayout
+        android:id="@+id/list_item_new_image_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:paddingTop="3dp"
+        >
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:src="@drawable/photo_frame"
+            />
+
+        <ImageView
+            android:id="@+id/list_item_new_image"
+            android:layout_width="120dp"
+            android:layout_height="73dp"
+            android:src="@drawable/ad_thumbnail"
+            android:scaleType="centerCrop"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:text="Title"
+        android:id="@+id/list_item_new_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@id/list_item_new_image_frame"
+        android:paddingTop="24dp"
+        android:textColor="@color/black_87"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:text="Location"
+        android:id="@+id/list_item_new_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textSize="14sp"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@id/list_item_new_image_frame"
+        android:layout_below="@id/list_item_new_title"
+        android:paddingTop="2dp"
+        />
+
+    <!--ImageView
+        android:src="@drawable/disclosure"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        /-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_13"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        />
+
+</RelativeLayout>

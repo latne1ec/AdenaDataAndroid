@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_item_job_layout"
+    android:layout_width="match_parent"
+    android:layout_height="106dp"
+    android:background="?android:attr/selectableItemBackground"
+    >    
+
+    <TextView
+        android:text="Title"
+        android:id="@+id/list_item_job_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/black_87"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:text="Location"
+        android:id="@+id/list_item_job_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_job_title"
+        android:textSize="16sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:text="Date"
+        android:id="@+id/list_item_job_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_job_location"
+        android:textSize="12sp"
+        android:textColor="@color/black_34"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_13"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

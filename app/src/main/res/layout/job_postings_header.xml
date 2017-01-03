@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search Jobs:"
+        android:textSize="20sp"
+        android:textColor="@color/black_87"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="16dp"
+        />
+
+    <EditText
+        android:id="@+id/job_postings_header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="What: job title"
+        android:inputType="text"
+        android:imeOptions="actionNext"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        />
+
+    <EditText
+        android:id="@+id/job_postings_header_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Where: location"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="2dp"
+        >
+
+        <Button
+            android:id="@+id/job_postings_header_filters_button"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="More Filters"
+            android:textColor="#fff"
+            android:background="@drawable/button_shape"
+            android:layout_marginRight="8dp"
+            />
+
+        <Button
+            android:id="@+id/job_postings_header_search_button"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Search"
+            android:textColor="#fff"
+            android:background="@drawable/button_shape"
+            android:layout_marginLeft="8dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Most Recent Jobs"
+        android:textSize="14sp"
+        android:textColor="@color/accent"
+        android:layout_marginTop="18dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:background="@color/light_grey"
+        />
+
+</LinearLayout>

@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.adenadata.android"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 2
+        versionName "1.1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    // Tabs
+    compile 'com.android.support:design:22.2.1'
+    // Parse
+    compile 'com.parse:parse-android:1.10.0'
+    compile 'com.parse.bolts:bolts-android:1.2.1'
+    // Progress Wheel - https://github.com/pnikosis/materialish-progress
+    compile 'com.pnikosis:materialish-progress:1.5'
+    // Glide - https://github.com/bumptech/glide
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    // Material Dialogs - https://github.com/afollestad/material-dialogs
+//    compile 'com.afollestad:material-dialogs:0.7.7.0'
+    // PullRefreshLayout - https://github.com/baoyongzhang/android-PullRefreshLayout
+//    compile 'com.baoyz.pullrefreshlayout:library:1.0.1' // Gets stuck! Weird bug
+}

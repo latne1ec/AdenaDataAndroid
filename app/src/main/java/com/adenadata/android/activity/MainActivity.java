@@ -1,6 +1,8 @@
 package com.adenadata.android.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -64,6 +66,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        //--SAVE Data
+        SharedPreferences preferences = this.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+
+        //--READ data
+        String hasMigrated = preferences.getString("hasMigrated","");
+
+        if (hasMigrated.equals("yes")) {
+            // Continue
+        } else {
+            ParseUser.logOut();;
+            editor.putString("hasMigrated", "yes");
+            editor.apply();
+        }
+
 
         // Redirect to TourActivity the first time the app is opened
         if (ParseUser.getCurrentUser() == null) {

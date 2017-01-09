@@ -61,12 +61,13 @@ public class New extends ParseObject {
 
     // returns null if there is no image!
     public String getImageUrl() {
-        ParseFile img = (ParseFile) get("postImage");
-        if (img != null) {
-            return img.getUrl();
-        } else {
-            return null;
-        }
+//        ParseFile img = (ParseFile) get("postImage");
+//        if (img != null) {
+//            return img.getUrl();
+//        } else {
+//            return null;
+//        }
+        return getString("postImageUrl");
     }
 
 }

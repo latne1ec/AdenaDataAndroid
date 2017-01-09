@@ -99,6 +99,7 @@ public class EventsListFragmentWithStateAdapter extends Fragment {
                 } else {
                     // Error
                     mAdapter.setState(EventsAdapterWithState.State.ERROR);
+                    Log.i(TAG, "Error: " + e);
                 }
             }
         });

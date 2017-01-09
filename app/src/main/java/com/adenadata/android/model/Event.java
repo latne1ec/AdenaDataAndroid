@@ -35,12 +35,14 @@ public class Event extends ParseObject {
 
     // returns null if there is no image!
     public String getImageUrl() {
-        ParseFile img = (ParseFile) get("eventImage");
-        if (img != null) {
-            return img.getUrl();
-        } else {
-            return null;
-        }
+//        ParseFile img = (ParseFile) get("eventImage");
+//        if (img != null) {
+//            return img.getUrl();
+//        } else {
+//            return null;
+//        }
+        return getString("eventImageUrl");
+
     }
 
 }

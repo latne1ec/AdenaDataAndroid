@@ -27,7 +27,13 @@ public class App extends Application {
         ParseObject.registerSubclass(New.class);
         ParseObject.registerSubclass(Job.class);
 
-        Parse.initialize(this, "fmyKfeKVisMjd17R32lojagYFn7NQcpYy7z9Oaqz", "FIYdqi1M0bmswOvDyMGtUwdCjaeMThJcklHeOeBl");
+        //Parse.initialize(this, "fmyKfeKVisMjd17R32lojagYFn7NQcpYy7z9Oaqz", "FIYdqi1M0bmswOvDyMGtUwdCjaeMThJcklHeOeBl");
+
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId("fmyKfeKVisMjd17R32lojagYFn7NQcpYy7z9Oaqz")
+                .server("https://adenadata.herokuapp.com/api/")
+                .build()
+        );
 
     }
 }

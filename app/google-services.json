@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "184010803381",
+    "firebase_url": "https://adenadata.firebaseio.com",
+    "project_id": "adenadata",
+    "storage_bucket": "adenadata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184010803381:android:a98e134624dc2aa7",
+        "android_client_info": {
+          "package_name": "com.adenadata.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184010803381-bb22bpi1gptufg0gtcj2fcjj1c0qdmjf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjOsEA7i5FntPlG-gQ6xpxf4GVPDvpdxk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

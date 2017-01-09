@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,14 +27,23 @@ import android.widget.TextView;
 
 import com.adenadata.android.R;
 import com.adenadata.android.model.New;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Time;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class AddNewActivity extends AppCompatActivity {
@@ -54,6 +64,7 @@ public class AddNewActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
 
+    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +84,9 @@ public class AddNewActivity extends AppCompatActivity {
         mTitleEditText = (EditText) findViewById(R.id.add_new_title);
         mLocationEditText = (EditText) findViewById(R.id.add_new_location);
         mTextEditText = (EditText) findViewById(R.id.add_new_text);
+
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         // Add photo
         mImageView = (ImageView) findViewById(R.id.add_new_image);
@@ -113,7 +127,7 @@ public class AddNewActivity extends AppCompatActivity {
                             photoFile = createImageFile();
                         } catch (IOException ex) {
                             // Error occurred while creating the File
-                            Log.i(TAG, "IOException");
+                            Log.i(TAG, "IOException: " +ex);
                         }
                         // Continue only if the File was successfully created
                         if (photoFile != null) {
@@ -218,60 +232,81 @@ public class AddNewActivity extends AppCompatActivity {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         mImageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] imageByteArray = stream.toByteArray();
-        // Save image file to Parse
-        // (from Parse docs) - if you're storing PNG images, make sure your filename ends with .png
-        final ParseFile imageFile = new ParseFile("picture.png", imageByteArray);
-        imageFile.saveInBackground(new SaveCallback() {
+
+
+        String userIdString = ParseUser.getCurrentUser().getObjectId();
+        DateFormat df = new SimpleDateFormat("yyMMddHHmmssZ");
+        String date = df.format(Calendar.getInstance().getTime());
+        String both = userIdString + "-" + date + ".png";
+        String childFolder = "postimages/";
+        String imageRefString = childFolder + both;
+
+        // Create a reference to 'images/mountains.jpg'
+        StorageReference imageRef = mStorageRef.child(imageRefString);
+
+
+        // Get the data from an ImageView as bytes
+        mImageView.setDrawingCacheEnabled(true);
+        mImageView.buildDrawingCache();
+        Bitmap bitmap = mImageView.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imageRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    // Error -> show dialog
-                    mProgressDialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(AddNewActivity.this);
-                    builder.setTitle("Something went wrong");
-                    builder.setMessage("Please try again.");
-                    builder.setPositiveButton("OK", null);
-                    builder.show();
-                } else {
-                    // Success -> save Post to Parse
-                    New theNew = new New();
-                    theNew.put("postTitle", mTitleEditText.getText().toString());
-                    theNew.put("searchedTitle", mTitleEditText.getText().toString().toLowerCase());
-                    theNew.put("postLocation", mLocationEditText.getText().toString());
-                    theNew.put("postText", mTextEditText.getText().toString());
-                    theNew.put("postImage", imageFile);
-                    // TODO save smaller image to thumbnail??
-                    theNew.put("postImageThumbnail", imageFile);
-                    theNew.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            mProgressDialog.dismiss();
-                            if (e != null) {
-                                // Error
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AddNewActivity.this);
-                                builder.setTitle("Something went wrong");
-                                builder.setMessage("Please try again.");
-                                builder.setPositiveButton("OK", null);
-                                builder.show();
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AddNewActivity.this);
-                                builder.setTitle("Shared Post");
-                                builder.setMessage("Post was saved successfully.");
-                                builder.setCancelable(false);
-                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        // Go to MainActivity
-                                        Intent intent = new Intent(AddNewActivity.this, MainActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                    }
-                                });
-                                builder.show();
-                            }
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddNewActivity.this);
+                builder.setTitle("Something went wrong");
+                builder.setMessage("Please try again.");
+                builder.setPositiveButton("OK", null);
+                builder.show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                String urlString;
+                urlString = downloadUrl.toString();
+
+                New theNew = new New();
+                theNew.put("postTitle", mTitleEditText.getText().toString());
+                theNew.put("searchedTitle", mTitleEditText.getText().toString().toLowerCase());
+                theNew.put("postLocation", mLocationEditText.getText().toString());
+                theNew.put("postText", mTextEditText.getText().toString());
+                theNew.put("postImageUrl", urlString);
+                theNew.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        mProgressDialog.dismiss();
+                        if (e != null) {
+                            // Error
+                            AlertDialog.Builder builder = new AlertDialog.Builder(AddNewActivity.this);
+                            builder.setTitle("Something went wrong");
+                            builder.setMessage("Please try again.");
+                            builder.setPositiveButton("OK", null);
+                            builder.show();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(AddNewActivity.this);
+                            builder.setTitle("Shared Post");
+                            builder.setMessage("Post was saved successfully.");
+                            builder.setCancelable(false);
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    // Go to MainActivity
+                                    Intent intent = new Intent(AddNewActivity.this, MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            });
+                            builder.show();
                         }
-                    });
-                }
+                    }
+                });
             }
         });
     }

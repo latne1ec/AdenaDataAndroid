@@ -291,7 +291,8 @@ public class MainActivity extends AppCompatActivity {
                     return new HomeFragment();
                 case 1:
 //                    return new NewsListFragment();
-                    return new NewsListFragmentWithSearchInsideRecyclerViewAndState();
+                    //return new NewsListFragmentWithSearchInsideRecyclerViewAndState();
+                    return new JobPostingsFragment();
                 case 2:
                     return new EventsListFragmentWithStateAdapter();
                 case 3:
@@ -302,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
 
         @Override
@@ -311,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return "HOME";
                 case 1:
-                    return "AD NOW";
+                    return "JOBS";
                 case 2:
                     return "EVENTS";
                 case 3:

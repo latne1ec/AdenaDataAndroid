@@ -135,7 +135,7 @@ public class TourActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 3) {
+            if (position == 1) {
                 return new WelcomeFragment();
             } else {
                 return PlaceholderFragment.newInstance(position);
@@ -144,7 +144,7 @@ public class TourActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
 
         /*
@@ -205,17 +205,19 @@ public class TourActivity extends AppCompatActivity {
 
             switch (mSectionNumber) {
                 case 0:
-                    text = "See what's happening all around you within the next 24 hours!";
-                    image = R.drawable.tour1;
-                    break;
-                case 1:
-                    text = "Check out some up and coming events.";
-                    image = R.drawable.tour2;
-                    break;
-                case 2:
+                   // text = "See what's happening all around you within the next 24 hours!";
+                   // image = R.drawable.tour1;
                     text = "Looking for a job where you fit? Let AD Jobs Help!";
                     image = R.drawable.tour3;
                     break;
+//                case 1:
+//                    text = "Check out some up and coming events.";
+//                    image = R.drawable.tour2;
+//                    break;
+//                case 2:
+//                    text = "Looking for a job where you fit? Let AD Jobs Help!";
+//                    image = R.drawable.tour3;
+//                    break;
             }
 
             TextView textView = (TextView) v.findViewById(R.id.tour_textView);

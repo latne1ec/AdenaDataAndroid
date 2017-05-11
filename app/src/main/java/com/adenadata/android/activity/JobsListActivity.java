@@ -107,7 +107,8 @@ public class JobsListActivity extends AppCompatActivity {
             query.whereMatches("jobTitle", mJobTitle.trim(), "i");
         }
         if (mJobLocation != null && !mJobLocation.trim().isEmpty()) {
-            query.whereMatches("jobLocation", mJobLocation.trim(), "i");
+            //query.whereMatches("jobLocation", mJobLocation.trim(), "i");
+            query.whereEqualTo("jobLocationTagsArray", mJobLocation.trim());
         }
         if (mPositionType != null && !mPositionType.equals("All")) {
             query.whereMatches("positionType", mPositionType, "i");

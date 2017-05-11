@@ -45,8 +45,8 @@ public class TourActivity extends AppCompatActivity {
         // Circles
         mCircle1 = (ImageView) findViewById(R.id.tour_circle1);
         mCircle2 = (ImageView) findViewById(R.id.tour_circle2);
-        mCircle3 = (ImageView) findViewById(R.id.tour_circle3);
-        mCircle4 = (ImageView) findViewById(R.id.tour_circle4);
+//        mCircle3 = (ImageView) findViewById(R.id.tour_circle3);
+//        mCircle4 = (ImageView) findViewById(R.id.tour_circle4);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -66,26 +66,26 @@ public class TourActivity extends AppCompatActivity {
                     case 0:
                         mCircle1.setImageResource(R.drawable.circle_on);
                         mCircle2.setImageResource(R.drawable.circle_off);
-                        mCircle3.setImageResource(R.drawable.circle_off);
-                        mCircle4.setImageResource(R.drawable.circle_off);
+//                        mCircle3.setImageResource(R.drawable.circle_off);
+//                        mCircle4.setImageResource(R.drawable.circle_off);
                         break;
                     case 1:
                         mCircle1.setImageResource(R.drawable.circle_off);
                         mCircle2.setImageResource(R.drawable.circle_on);
-                        mCircle3.setImageResource(R.drawable.circle_off);
-                        mCircle4.setImageResource(R.drawable.circle_off);
+//                        mCircle3.setImageResource(R.drawable.circle_off);
+//                        mCircle4.setImageResource(R.drawable.circle_off);
                         break;
                     case 2:
                         mCircle1.setImageResource(R.drawable.circle_off);
                         mCircle2.setImageResource(R.drawable.circle_off);
-                        mCircle3.setImageResource(R.drawable.circle_on);
-                        mCircle4.setImageResource(R.drawable.circle_off);
+//                        mCircle3.setImageResource(R.drawable.circle_on);
+//                        mCircle4.setImageResource(R.drawable.circle_off);
                         break;
                     case 3:
                         mCircle1.setImageResource(R.drawable.circle_off);
                         mCircle2.setImageResource(R.drawable.circle_off);
-                        mCircle3.setImageResource(R.drawable.circle_off);
-                        mCircle4.setImageResource(R.drawable.circle_on);
+//                        mCircle3.setImageResource(R.drawable.circle_off);
+//                        mCircle4.setImageResource(R.drawable.circle_on);
                         break;
                 }
             }

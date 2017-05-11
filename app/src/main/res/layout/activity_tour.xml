@@ -37,22 +37,6 @@
             android:layout_margin="4dp"
             />
 
-        <ImageView
-            android:id="@+id/tour_circle3"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/circle_off"
-            android:layout_margin="4dp"
-            />
-
-        <ImageView
-            android:id="@+id/tour_circle4"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/circle_off"
-            android:layout_margin="4dp"
-            />
-
     </LinearLayout>
 
 </RelativeLayout>

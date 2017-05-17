@@ -17,6 +17,13 @@ import com.adenadata.android.activity.FiltersActivity;
 import com.adenadata.android.activity.JobActivity;
 import com.adenadata.android.activity.JobsListActivity;
 import com.adenadata.android.model.Job;
+import com.seatgeek.placesautocomplete.DetailsCallback;
+import com.seatgeek.placesautocomplete.OnPlaceSelectedListener;
+import com.seatgeek.placesautocomplete.PlacesAutocompleteTextView;
+import com.seatgeek.placesautocomplete.model.AddressComponent;
+import com.seatgeek.placesautocomplete.model.AddressComponentType;
+import com.seatgeek.placesautocomplete.model.Place;
+import com.seatgeek.placesautocomplete.model.PlaceDetails;
 
 import java.util.ArrayList;
 
@@ -29,11 +36,13 @@ public class JobPostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_JOB = 1;
+    Context context;
 
     ArrayList<Job> mJobs;
 
-    public JobPostingsAdapter(ArrayList<Job> jobs) {
+    public JobPostingsAdapter(ArrayList<Job> jobs, Context context) {
         mJobs = jobs;
+        this.context = context;
     }
 
 
@@ -66,7 +75,7 @@ public class JobPostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
         if (position == 0) {
             // TYPE_HEADER
             final ViewHolderHeader vhh = (ViewHolderHeader) viewHolder;
@@ -92,22 +101,49 @@ public class JobPostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             });
             // Search with keyboard return - http://stackoverflow.com/a/3205405/4034572
             // THIS CODE MUST BE THE SAME THAT THE searchButton ABOVE
-            vhh.jobLocationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView view, int actionId, KeyEvent keyEvent) {
-                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        Context context = view.getContext();
-                        Intent i = new Intent(context, JobsListActivity.class);
-                        String title = vhh.jobTitleEditText.getText().toString().trim();
-                        i.putExtra(JobsListActivity.EXTRA_TITLE, title);
-                        String location = vhh.jobLocationEditText.getText().toString().trim();
-                        i.putExtra(JobsListActivity.EXTRA_LOCATION, location);
-                        context.startActivity(i);
-                        return true;
+
+            vhh.jobLocationEditText.setOnPlaceSelectedListener(
+                    new OnPlaceSelectedListener() {
+                        @Override
+                        public void onPlaceSelected(final Place place) {
+                            // do something awesome with the selected place
+
+                            vhh.jobLocationEditText.getDetailsFor(place, new DetailsCallback() {
+                                @Override
+                                public void onSuccess(final PlaceDetails details) {
+
+                                    String city = "";
+                                    String state = "";
+
+                                    for (AddressComponent component : details.address_components) {
+                                        for (AddressComponentType type : component.types) {
+                                            switch (type) {
+                                                case LOCALITY:
+                                                    city = component.long_name;
+                                                    break;
+                                                case ADMINISTRATIVE_AREA_LEVEL_1:
+                                                    state = component.short_name;
+                                                    break;
+                                            }
+                                        }
+                                    }
+
+                                    Intent i = new Intent(context, JobsListActivity.class);
+                                    String title = vhh.jobTitleEditText.getText().toString().trim();
+                                    i.putExtra(JobsListActivity.EXTRA_TITLE, title);
+                                    String location = !city.isEmpty() ? city : state;
+                                    i.putExtra(JobsListActivity.EXTRA_LOCATION, location);
+                                    context.startActivity(i);
+                                }
+
+                                @Override
+                                public void onFailure(Throwable throwable) {
+
+                                }
+                            });
+                        }
                     }
-                    return false;
-                }
-            });
+            );
         } else {
             // TYPE_JOB
             final Job job = mJobs.get(position - 1);
@@ -141,7 +177,7 @@ public class JobPostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         Button filtersButton;
         Button searchButton;
         EditText jobTitleEditText;
-        EditText jobLocationEditText;
+        PlacesAutocompleteTextView jobLocationEditText;
 
         public ViewHolderHeader(View v) {
             super(v);
@@ -150,7 +186,7 @@ public class JobPostingsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             filtersButton = (Button) v.findViewById(R.id.job_postings_header_filters_button);
             searchButton = (Button) v.findViewById(R.id.job_postings_header_search_button);
             jobTitleEditText = (EditText) v.findViewById(R.id.job_postings_header_title);
-            jobLocationEditText = (EditText) v.findViewById(R.id.job_postings_header_location);
+            jobLocationEditText = (PlacesAutocompleteTextView) v.findViewById(R.id.job_postings_header_location);
         }
     }
 

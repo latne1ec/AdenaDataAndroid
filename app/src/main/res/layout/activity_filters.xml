@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.adenadata.android.activity.EventActivity"
-    android:background="#fff"
-    >
+    android:background="#fff">
 
     <include layout="@layout/toolbar"/>
 
@@ -36,17 +35,16 @@
                 android:layout_marginRight="16dp"
                 />
 
-            <EditText
+            <com.seatgeek.placesautocomplete.PlacesAutocompleteTextView
                 android:id="@+id/filters_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Where: location"
-                android:inputType="text"
-                android:imeOptions="actionSearch"
+                app:pacv_googleMapsApiKey="AIzaSyBYzUL4Tt7JYkI7La90J_jI0U8dT8rnpP8"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                />
+                android:hint="Where: location"/>
+
 
             <Button
                 android:id="@+id/filters_position_button"

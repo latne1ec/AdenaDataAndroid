@@ -12,9 +12,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.adenadata.android.R;
+import com.seatgeek.placesautocomplete.DetailsCallback;
+import com.seatgeek.placesautocomplete.OnPlaceSelectedListener;
+import com.seatgeek.placesautocomplete.PlacesAutocompleteTextView;
+import com.seatgeek.placesautocomplete.model.AddressComponent;
+import com.seatgeek.placesautocomplete.model.AddressComponentType;
+import com.seatgeek.placesautocomplete.model.Place;
+import com.seatgeek.placesautocomplete.model.PlaceDetails;
 
 /**
  * Created by albertvilacalvo on 30/7/15.
@@ -31,9 +39,14 @@ public class FiltersActivity extends AppCompatActivity {
     private Button mEmploymentButton;
     private Button mEducationButton;
 
+    EditText jobTitleEditText;
+    PlacesAutocompleteTextView jobLocationEditText;
+
     private int mSelectedPosition = -1;
     private int mSelectedEmployment = -1;
     private int mSelectedEducation = -1;
+
+    private String locationPlace = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,10 +159,62 @@ public class FiltersActivity extends AppCompatActivity {
         });
         */
 
+        jobTitleEditText = (EditText) findViewById(R.id.filters_title);
+        jobLocationEditText = (PlacesAutocompleteTextView) findViewById(R.id.filters_location);
+
+        jobLocationEditText.setOnPlaceSelectedListener(
+                new OnPlaceSelectedListener() {
+                    @Override
+                    public void onPlaceSelected(final Place place) {
+                        // do something awesome with the selected place
+
+                        jobLocationEditText.getDetailsFor(place, new DetailsCallback() {
+                            @Override
+                            public void onSuccess(final PlaceDetails details) {
+
+                                String city = "";
+                                String state = "";
+
+                                for (AddressComponent component : details.address_components) {
+                                    for (AddressComponentType type : component.types) {
+                                        switch (type) {
+                                            case LOCALITY:
+                                                city = component.long_name;
+                                                break;
+                                            case ADMINISTRATIVE_AREA_LEVEL_1:
+                                                state = component.short_name;
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                locationPlace = !city.isEmpty() ? city : state;
+                            }
+
+                            @Override
+                            public void onFailure(Throwable throwable) {
+
+                            }
+                        });
+                    }
+                }
+        );
+
         findViewById(R.id.filters_search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(FiltersActivity.this, JobsListActivity.class);
+                String title = jobTitleEditText.getText().toString().trim();
+                i.putExtra(JobsListActivity.EXTRA_TITLE, title);
+
+                String location = "";
+                if(locationPlace.isEmpty())
+                    location = jobLocationEditText.getText().toString().trim();
+                else if (!jobLocationEditText.getText().toString().isEmpty())
+                    location = locationPlace;
+
+                i.putExtra(JobsListActivity.EXTRA_LOCATION, location);
+
                 if (mSelectedPosition >= 0) {
                     i.putExtra(JobsListActivity.EXTRA_POSITION_TYPE, mPositionItems[mSelectedPosition]);
                 }

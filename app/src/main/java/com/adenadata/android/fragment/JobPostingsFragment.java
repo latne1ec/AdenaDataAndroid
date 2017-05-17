@@ -56,7 +56,7 @@ public class JobPostingsFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mAdapter = new JobPostingsAdapter(mJobs);
+        mAdapter = new JobPostingsAdapter(mJobs,getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         mPullRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.job_postings_pullRefreshLayout);

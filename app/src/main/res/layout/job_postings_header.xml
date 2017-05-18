@@ -37,6 +37,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        app:pacv_resultType="no_type"
         android:hint="Where: location"/>
 
     <LinearLayout
